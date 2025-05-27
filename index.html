@@ -47,6 +47,9 @@
       position: relative;
       width: 100%;
       height: 60px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
     }
 
     button {
@@ -57,6 +60,7 @@
       cursor: pointer;
       transition: 0.3s;
       z-index: 2;
+      min-width: 100px;
     }
 
     #yes {
@@ -68,6 +72,9 @@
       background-color: #FF0000;
       color: white;
       position: fixed;
+      top: 70%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     .particles {
@@ -115,7 +122,8 @@
       }
 
       .buttons {
-        height: 80px;
+        flex-direction: column;
+        height: auto;
       }
     }
   </style>
@@ -131,7 +139,7 @@
   <h1>s-sey barisalim miii :3 &lt;3</h1>
 
   <div class="image-container">
-    <img src="resim.png" alt="Tatlı bir görsel" />
+    <img src="resim.jpg" alt="Tatlı bir görsel" /> <!-- PNG ise 'resim.png' yap -->
     <div class="buttons">
       <button id="yes">Evet</button>
       <button id="no">Hayır</button>
@@ -141,23 +149,21 @@
   <script>
     const noButton = document.getElementById("no");
 
-    function enableEscapeEffect() {
-      noButton.addEventListener("mouseover", function () {
-        // SADECE MOBİLDE KAÇSIN
-        if (window.innerWidth > 600) return;
-
-        const maxX = window.innerWidth - noButton.offsetWidth;
-        const maxY = window.innerHeight - noButton.offsetHeight;
-
-        const x = Math.random() * maxX;
-        const y = Math.random() * maxY;
-
-        noButton.style.left = `${x}px`;
-        noButton.style.top = `${y}px`;
-      });
+    function kaçır() {
+      const maxX = window.innerWidth - noButton.offsetWidth;
+      const maxY = window.innerHeight - noButton.offsetHeight;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      noButton.style.left = `${x}px`;
+      noButton.style.top = `${y}px`;
     }
 
-    enableEscapeEffect();
+    // Mobil ve masaüstü için kaçma
+    noButton.addEventListener("mouseover", kaçır);
+    noButton.addEventListener("touchstart", function (e) {
+      e.preventDefault();
+      kaçır();
+    });
 
     document.getElementById("yes").addEventListener("click", function () {
       const müzik = document.getElementById("müzik");
@@ -175,9 +181,7 @@
       particle.style.left = Math.random() * 100 + 'vw';
       particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
       particle.style.fontSize = (Math.random() * 20 + 10) + 'px';
-
       particleContainer.appendChild(particle);
-
       setTimeout(() => {
         particle.remove();
       }, 5000);
