@@ -6,54 +6,59 @@
   <title>turunculu bacı</title>
   <style>
     body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       font-family: Arial, sans-serif;
       background-color: #ffdde1;
       margin: 0;
-      overflow: hidden;
       padding: 20px;
       box-sizing: border-box;
+      overflow-x: hidden;
       position: relative;
     }
 
     h1 {
-      font-size: 2.2rem;
+      font-size: 2rem;
       text-align: center;
       color: #c2185b;
-      margin-top: 20px;
       z-index: 2;
-      position: relative;
+      margin-top: 20px;
     }
 
     .image-container {
       position: relative;
-      max-width: 360px;
-      margin: 0 auto;
-      z-index: 1; /* Kalplerin arkada kalması için düşük z-index */
+      max-width: 90%;
+      width: 320px;
+      margin: 20px auto;
+      z-index: 2;
     }
 
     .image-container img {
       width: 100%;
+      height: auto;
       border-radius: 20px;
       display: block;
     }
 
     .buttons {
-      margin-top: 15px;
       display: flex;
       justify-content: center;
       gap: 15px;
-      z-index: 2;
+      margin-top: 20px;
       position: relative;
+      z-index: 2;
     }
 
     button {
       padding: 10px 20px;
+      font-size: 1rem;
       border: none;
       border-radius: 10px;
-      font-size: 1rem;
       cursor: pointer;
       transition: 0.3s;
       min-width: 100px;
+      position: relative;
     }
 
     #yes {
@@ -64,10 +69,7 @@
     #no {
       background-color: #FF0000;
       color: white;
-      position: fixed;
-      top: 70%;
-      left: 50%;
-      transform: translate(-50%, -50%);
+      position: absolute;
     }
 
     .particles {
@@ -78,7 +80,7 @@
       height: 100%;
       pointer-events: none;
       overflow: hidden;
-      z-index: 0; /* En arkaya al */
+      z-index: 1;
     }
 
     .particle {
@@ -102,16 +104,17 @@
 
     @media (max-width: 600px) {
       h1 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
       }
 
       button {
         font-size: 0.9rem;
         padding: 8px 16px;
+        min-width: 90px;
       }
 
       .image-container {
-        max-width: 90%;
+        width: 90%;
       }
     }
   </style>
@@ -124,10 +127,10 @@
     <source src="sarki.mp3" type="audio/mpeg">
   </audio>
 
-  <h1>s-sey barisalim miii 🥺💞</h1>
+  <h1>s-sey barisalim miii :3 &lt;3</h1>
 
   <div class="image-container">
-    <img src="resim.jpg" alt="Tatlı bir görsel" />
+    <img src="resim.png" alt="Tatlı bir görsel" />
   </div>
 
   <div class="buttons">
@@ -137,12 +140,18 @@
 
   <script>
     const noButton = document.getElementById("no");
+    const buttonsContainer = document.querySelector(".buttons");
 
     function kaçır() {
-      const maxX = window.innerWidth - noButton.offsetWidth;
-      const maxY = window.innerHeight - noButton.offsetHeight;
+      const containerWidth = buttonsContainer.offsetWidth;
+      const containerHeight = buttonsContainer.offsetHeight;
+
+      const maxX = containerWidth - noButton.offsetWidth;
+      const maxY = containerHeight - noButton.offsetHeight;
+
       const x = Math.random() * maxX;
       const y = Math.random() * maxY;
+
       noButton.style.left = `${x}px`;
       noButton.style.top = `${y}px`;
     }
@@ -154,7 +163,8 @@
     });
 
     document.getElementById("yes").addEventListener("click", function () {
-      document.getElementById("müzik").play();
+      const müzik = document.getElementById("müzik");
+      müzik.play();
       alert('Barısmayan gaydi zaten hehehe❤️');
     });
 
@@ -168,7 +178,9 @@
       particle.style.left = Math.random() * 100 + 'vw';
       particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
       particle.style.fontSize = (Math.random() * 20 + 10) + 'px';
+
       particleContainer.appendChild(particle);
+
       setTimeout(() => {
         particle.remove();
       }, 5000);
